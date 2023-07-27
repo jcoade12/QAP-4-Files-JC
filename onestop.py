@@ -8,13 +8,13 @@ import FormatValues as FV
 f = open ('OSICDEF.dat')
 #constants
 Next_policy_num = int(f.readline())
-Basic_premium = (f.readline())
-Additional_carsdiscount= (f.readline())
-Extra_liability_coverage = (f.readline())
-Glass_coverage = (f.readline())
-Loaner_car_coverage= (f.readline())
-HST= (f.readline())
-Processing_fee_for_monthly= (f.readline())
+Basic_premium = int(f.readline())
+Additional_carsdiscount= float(f.readline())
+Extra_liability_coverage = int(f.readline())
+Glass_coverage = int(f.readline())
+Loaner_car_coverage=int(f.readline())
+HST= float(f.readline())
+Processing_fee_for_monthly=float(f.readline())
 
 #my inputs
 customer_first=input("Enter customer name: ").title()
@@ -35,9 +35,17 @@ else:
 
 postal_code=input("Enter postal code: ")
 phone_numb=input("Enter customer phone number: ")
+while True:
+        payment_prefrance=input("would they like to pay in monthly or full M or F: ").title()
+        if payment_prefrance==("M"):
+            payment_choice=("Monthly")
+            break
+        
+        else: payment_prefrance==("F")
+        payment_choice=("Full")
+        break
 
-
-numbers_of_cars_being_insured=input("Enter number of cars being insured: ")
+numbers_of_cars_being_insured=int(input("Enter number of cars being insured: "))
 if numbers_of_cars_being_insured==1 :
     discount=1
 #option for glass covrage
@@ -63,14 +71,7 @@ while True:
         lonercar=("No")
         break
     
-    while True:
-        payment_prefrance=input("would they like to pay in monthly or full M or F: ").title()
-        if payment_prefrance==("M"):
-            payment_choice=("Monthly")
-            break
-        if payment_prefrance==("F"):
-            payment_choice=("Full")
-            break
+   
 extras=0
 #my extras
 extras_list=[lonercar,glass_cov,]
