@@ -1,0 +1,190 @@
+#one stop insurance by jack coady tuesday nov 21
+
+
+#my imports
+import datetime
+from datetime import date
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+import FormatValues as FV
+#list of provineces
+province_list=["Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador","Nova Scotia","Ontario","Prince Edward Island"]
+
+#my datetime clock prepared and ready for when calclulations needs it
+current_time_in_total=datetime.now()
+#this will be the current date and time
+invoice_date=current_time_in_total
+#then this math for the first day of the next month
+first_payment_date=invoice_date+relativedelta(months=1)
+#this to set the first day above to set the next month
+true_first_payment=first_payment_date.replace(day=1)
+
+#then to make my time so it can be presentable
+firstpay_show=true_first_payment.strftime("%c")
+
+invoice_show=current_time_in_total.strftime("%c")
+
+#set up my constants
+POLICY_NUMB=1944
+BASIC_PREMIUM=869.00
+DISCOUNT_ADDTIONIAL_CARS=.25
+EXTRA_LIABILITY=130.00
+GLASS_COVRAGE=86.00
+LONER_CAR=58.00
+HST=.15
+PROCESSING_FEE_MONTHLY=39.99
+
+#and to make it so this program repeats i hope
+while True:
+
+                        #my inputs
+                        #customer first name
+        customer_first=input("please enter customer first name: ").title()
+                        #customer last name
+        customer_last=input("please enter customer last name: ").title()
+        #customer adress
+        customer_adress=input("please enter customer adress: ")
+        #customer city
+        customer_city=input("please enter customer city: ").title()
+        #customer province and province valadation
+        while True:
+            province=input("please enter province: ")
+            province_upper= province.capitalize()
+            if province_upper in province_list:
+                break
+            else:
+                print("error not a valid province")
+        #input for postal code
+        postal_code=input("please enter customer postal code: ")
+        #input for phone number
+        customer_phone_numb=input("please enter customer phone number: ")
+        #input for number of cars being inshured
+        numb_of_cars_inshured=input("please enter the number of cars being insured: ")
+        #extra liability covrage
+        while True:
+            extra_libility_option=input("please enter extra liability or n if not wanted: ")
+            if extra_libility_option>1000000:
+                print("error cannot be above 100000")
+            if extra_libility_option<1000000:
+                break
+            if extra_libility_option==("n"):
+               car_liability=0
+            break
+            
+
+        #then input for glass covrage
+        while True:
+            optonal_glass_covrage=input("optonial glass covrage Y for yes N for no").upper()
+            if optonal_glass_covrage==("Y"):
+
+                break
+        if optonal_glass_covrage==("N"):
+            car_glass_cov=0
+            break
+        else: print("error yes or no")
+
+    #input for loner car
+        while True:
+                optonal_loner_car=input("optonial glass covrage Y for yes N for no").upper()
+                if optonal_loner_car==("Y"):
+
+                    break
+        if optonal_loner_car==("N"):
+            loner_car_cov=0
+            break
+        else: print("error yes or no")
+
+
+#list to valadate full or monthly or down payment.
+        full_monthly_list=["M","F","D"]
+        
+        #valadating my full monthly
+        while True:
+            full_monthly=input("would you like full or monthly M for monthly F for full or D for down pay: ").upper()
+
+            if full_monthly==("M"):
+                down_pay=0
+                down_pay_disp="N"
+                break
+
+            if full_monthly==("F"):
+                down_pay=0
+                down_pay_disp="N"
+                break
+            if full_monthly==("D"):
+                down_pay=input("please enter amount of down payment: ")
+                down_pay_disp=down_pay
+                break
+
+            if full_monthly not in full_monthly_list:
+                print("error F or M or D")
+
+        claims=input("")
+
+
+#my math and calculations
+additonnal_cars_calc=BASIC_PREMIUM*DISCOUNT_ADDTIONIAL_CARS   
+car_insure_cost=numb_of_cars_inshured*additonnal_cars_calc
+if numb_of_cars_inshured==1:
+    car_insure_cost=0
+    insurance_primum=BASIC_PREMIUM+car_insure_cost
+
+#extra costs calc
+car_liability=numb_of_cars_inshured*extra_libility_option
+if extra_libility_option==0:
+    extra_libility_option=1
+car_glass_cov=numb_of_cars_inshured*GLASS_COVRAGE
+if optonal_glass_covrage=="N":
+    car_glass_cov=0
+loner_car_cov=numb_of_cars_inshured*LONER_CAR
+if optonal_loner_car=="N":
+    loner_car_cov=0
+#then add to get total extra costs
+total_extra_cost=car_liability+car_glass_cov+loner_car_cov
+#then the total insurance primum
+total_insurance_premium=insurance_primum+total_extra_cost
+#then to calculate the hst
+hst=HST*total_insurance_premium
+#and the total cost
+total_cost=total_insurance_premium+hst
+#dates and time stuff
+#processeing fee for monthly
+if full_monthly=="M" or full_monthly=="D":
+    total_cost+PROCESSING_FEE_MONTHLY
+    first_pay_cost=total_cost/8
+#down payment math and dates
+    total_cost-down_pay
+
+
+#and to get my print ready
+print(f"               one stop insurace")
+print(f"---------------------------------------------")
+print(f" Date of issue:   {current_time_in_total}")
+print(f" Customer Name:   {customer_first}{customer_last}")
+print(f"---------------------------------------------")
+print(f" Adress:          {customer_adress}")
+print(f" City:            {customer_city}")
+print(f" Province:        {province}")
+print(f" Postal code:     {postal_code}")
+print(f" Customer phone:  {customer_phone_numb}")
+print(f"---------------------------------------------")
+print(f" Insured Cars:    {numb_of_cars_inshured}")
+print(f" Extra libility:  {extra_libility_option}")
+print(f" Glass covrage:   {optonal_glass_covrage} {car_glass_cov:.0f}")
+print(f" Loner car:       {optonal_loner_car} {loner_car_cov:.0f}")
+print(f" Payment choice:  {full_monthly}")
+#i want it to show downpay if there is any and not too if there is none so im going to put some if stuff here
+if down_pay > 1:
+ print(f"Downpay amount:  {down_pay:.0f}")
+print(f" Car insure cost: {insurance_primum:.0f}")
+print(f" Total extra cost:{total_extra_cost:.0f}")
+print(f" Total primum: {total_insurance_premium:.0f}")
+print(f" hst cost:     {hst:.0f}")
+print(f" total cost:   {total_cost:.0f}")
+print(f"---------------------------------------------")
+if full_monthly=="M" or full_monthly=="D":
+ print(f"Invoice date:{invoice_show}")
+ print(f"Date of first payment:{firstpay_show}")
+ print(f"First pay cost:{first_pay_cost}")
+else:
+ print(f" Thank you for using one stop insurance")
